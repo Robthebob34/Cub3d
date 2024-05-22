@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: robinheck <robinheck@student.42.fr>        +#+  +:+       +#+        */
+/*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:01:33 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/21 12:00:01 by robinheck        ###   ########.fr       */
+/*   Updated: 2024/05/22 12:54:39 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,28 @@ int verify_extensention(char *file)
     return (0);
 }
 
-// int is_map_closed (char **map)
-// {
-	
-// }
-
-char	*create_long_map(char *file)
+char **get_data(char **file)
 {
-	char	*long_map;
+	char	**data;
+	int		i;
+	
+	i = 0;
+	data = NULL;
+	data = malloc(7 * sizeof(char *));
+	if (!data)
+		return (data);
+	while (i < 6)
+	{
+		data[i] = ft_read_line(file);
+		i++;
+	}
+	data[i] = NULL;
+	return (data);
+}
+
+char	*read_file(char *file)
+{
+	char	*long_file;
 	char	*tmp;
 	int		fd;
 
@@ -40,7 +54,7 @@ char	*create_long_map(char *file)
 		perror("Error\nInvalid map_path\n");
 		exit(EXIT_FAILURE);
 	}
-	long_map = get_next_line(fd);
+	long_file = get_next_line(fd);
 	while (1)
 	{
 		tmp = get_next_line(fd);
@@ -49,27 +63,51 @@ char	*create_long_map(char *file)
 			free(tmp);
 			break ;
 		}
-		long_map = ft_strjoin(long_map, tmp);
+		long_file = ft_strjoin(long_file, tmp);
 	}
 	close (fd);
-	return (long_map);
+	return (long_file);
 }
-char	**map_tab(char *long_map)
+char	**remake_file(char *long_file)
 {
-	char **map;
+	char **file;
 	
-	if (!long_map)
+	if (!long_file)
 	{
 		perror("Error\n");
 		exit(EXIT_FAILURE);
 	}
-	map = ft_split(long_map, '\n');
-	free(long_map);
-	return (map);
+	file = ft_split(long_file, '\n');
+	free(long_file);
+	return (file);
 }
 
-int parse_map(char *file)
+int parse_map(char *file_path, t_db *db)
 {
-	
-    return (verify_extensention(file));
+	char	**file;
+
+	file = remake_file(read_file(file_path));
+	if (!file)
+		return (0);
+	db->map->texture_path = get_data(file);
+	if (!db->map->map)
+		return (0);
+	db->map->map = get_map(file);
+	if (!db->map->map)
+		return (0);
+	int i = 0;
+	i = 0;
+	while (db->map->texture_path[i])
+	{
+		printf("%s\n",db->map->texture_path[i]);
+		i++;
+	}
+	printf("--------------------------------------\n");
+	i = 0;
+	while (db->map->map[i])
+	{
+		printf("%s\n",db->map->map[i]);
+		i++;
+	}
+    return (verify_extensention(file_path) && load_texture(db));
 }

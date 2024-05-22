@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/22 13:11:55 by rheck            ###   ########.fr       */
+/*   Created: 2023/04/04 13:51:04 by rheck             #+#    #+#             */
+/*   Updated: 2023/09/28 13:19:50 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	t_db	*db;
-	
-	db = malloc(sizeof(t_db));
-	db->map = malloc(sizeof(t_map));
-	if (argc != 2)
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
 	{
-		printf("Usage Cub3d : ./cub3d map_name.cub");
-		return (1);
+		return (0);
 	}
-	if (!parse_map(argv[1], db))
+	while ((unsigned char)*s1 == (unsigned char)*s2 && *s1 && *s2 && i < n - 1)
 	{
-		printf("Error\n");
-		return (1);
+		s1++;
+		s2++;
+		i++;
 	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }

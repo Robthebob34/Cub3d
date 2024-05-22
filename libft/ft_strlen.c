@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/22 13:11:55 by rheck            ###   ########.fr       */
+/*   Created: 2023/04/03 14:09:44 by rheck             #+#    #+#             */
+/*   Updated: 2023/11/28 13:49:30 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+size_t	ft_strlen(const char *s)
 {
-	t_db	*db;
-	
-	db = malloc(sizeof(t_db));
-	db->map = malloc(sizeof(t_map));
-	if (argc != 2)
-	{
-		printf("Usage Cub3d : ./cub3d map_name.cub");
-		return (1);
-	}
-	if (!parse_map(argv[1], db))
-	{
-		printf("Error\n");
-		return (1);
-	}
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
 }

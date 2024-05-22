@@ -1,13 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rheck <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 11:28:25 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/22 11:29:47 by rheck            ###   ########.fr       */
+/*   Created: 2023/04/10 18:36:54 by rheck             #+#    #+#             */
+/*   Updated: 2023/04/11 13:06:18 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "libft.h"
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	len;
+
+	if (s)
+	{
+		len = ft_strlen(s);
+		write(fd, s, len);
+		write(fd, "\n", 1);
+	}
+}

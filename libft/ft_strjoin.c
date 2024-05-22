@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/22 13:11:55 by rheck            ###   ########.fr       */
+/*   Created: 2023/04/06 15:24:22 by rheck             #+#    #+#             */
+/*   Updated: 2023/12/04 15:26:11 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	t_db	*db;
-	
-	db = malloc(sizeof(t_db));
-	db->map = malloc(sizeof(t_map));
-	if (argc != 2)
-	{
-		printf("Usage Cub3d : ./cub3d map_name.cub");
-		return (1);
-	}
-	if (!parse_map(argv[1], db))
-	{
-		printf("Error\n");
-		return (1);
-	}
+	char	*str;
+	char	*old_s1;
+	char	*old_s2;
+	int		i;
+
+	i = 0;
+	old_s1 = s1;
+	old_s2 = s2;
+	if (!s1 || !s2)
+		return (NULL);
+	str = malloc((ft_strlen(s1)+ ft_strlen(s2) + 1));
+	if (str == 0)
+		return (0);
+	while (*s1)
+		str[i++] = *s1++;
+	while (*s2)
+		str[i++] = *s2++;
+	str[i] = 0;
+	free(old_s1);
+	free(old_s2);
+	return (str);
 }

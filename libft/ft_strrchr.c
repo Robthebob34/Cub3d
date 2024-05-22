@@ -1,13 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rheck <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 11:28:25 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/22 11:29:47 by rheck            ###   ########.fr       */
+/*   Created: 2023/04/04 13:49:00 by rheck             #+#    #+#             */
+/*   Updated: 2023/04/11 13:16:34 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "libft.h"
+
+char	*ft_strrchr(const char *s, int c)
+{
+	char	*last;
+
+	last = 0;
+	while (*s != 0)
+	{
+		if (*s == (char)c)
+			last = ((char *)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return (last);
+}
