@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:01:33 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/22 12:54:39 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/23 14:07:33 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,12 @@ int parse_map(char *file_path, t_db *db)
 	}
 	printf("--------------------------------------\n");
 	i = 0;
+	if (!db->map->map)
+		printf("RIEN\n");
 	while (db->map->map[i])
 	{
 		printf("%s\n",db->map->map[i]);
 		i++;
 	}
-    return (verify_extensention(file_path) && load_texture(db));
+    return (verify_extensention(file_path) && check_texture(db) && !is_rounded(db, 0, 0) && verfiy_characters(db));
 }
