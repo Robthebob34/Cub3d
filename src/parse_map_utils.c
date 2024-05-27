@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/23 14:02:20 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/27 14:31:15 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char *ft_read_line( char **file)
 	static int	i;
 	char		*line;
 	
+	printf("%d\n", i);
 	line = ft_strdup(file[i]);
 	i++;
 	return (line);
@@ -35,9 +36,12 @@ char **get_map(char **file)
 	map = NULL;
 	while (file[length])
 		length++;
+	printf("length %d\n", length);
+	if (length <= 5)
+		return (NULL);
 	map = malloc((length - 5) * sizeof(char *));
 	if (!map)
-		return (map);
+		return (NULL);
 	while (i < length)
 	{
 		map[index] = ft_read_line(file);

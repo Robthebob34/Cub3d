@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:01:33 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/23 14:07:33 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/27 14:30:07 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char **get_data(char **file)
 	while (i < 6)
 	{
 		data[i] = ft_read_line(file);
+		if (data[i] == NULL)
+			break;
 		i++;
 	}
 	data[i] = NULL;

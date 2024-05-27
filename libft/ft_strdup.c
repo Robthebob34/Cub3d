@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rheck <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:44:46 by rheck             #+#    #+#             */
-/*   Updated: 2023/04/10 19:01:51 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/27 14:25:47 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(char *src)
 	char	*pnt;
 	int		i;
 
+	if (!src)
+		return (NULL);
 	src_len = ft_strlen(src);
 	pnt = malloc((src_len + 1) * sizeof(char));
 	if (!pnt)
