@@ -1,5 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rheck <rheck@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/05/28 12:47:51 by rheck             #+#    #+#              #
+#    Updated: 2024/05/28 12:49:35 by rheck            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
 INC_DIR = ./inc
 LIBFT_DIR = ./libft
 SRC_DIR = ./src
@@ -19,7 +32,7 @@ TARGET = cub3d
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $^
+	$(CC) $(CFLAGS) $(MLXFLAGS) -I $(INC_DIR) -o $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(INC_DIR) -c $< -o $@

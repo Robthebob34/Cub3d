@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/27 14:31:15 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/28 12:45:17 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,33 @@ char **get_map(char **file)
 	return (map);
 }
 
-// void	load_texture(t_db *db)
-// {
-// 	int	index;
-// 	int	i;
-// 	int	size;
+void	load_texture(t_db *db, char *t_path)
+{
+	int	length;
 
-// 	i = 0;
-// 	size = 0;
-// 	index = 0;
-// 	while(db->map->texture_path[i])
-// 	{
-// 		size = ft_strlen(db->map->texture_path[i]);
-// 		while(index < db->map->texture_path[i])
-// 		{
-// 			if (db->map->texture_path[index] == '.')
-// 				break;
-// 			index++;
-// 		}
-// 	}
-// }
+	length = ft_strlen(t_path);
+	while (length >= 0 && t_path[length] != '.')
+		length--;
+	if (length > 0)
+	{
+		if (t_path[0] == 'N' && t_path[1] == 'O')
+			db->path_north = ft_strdup(t_path + length);
+		else if (t_path[0] == 'S' && t_path[1] == 'O')
+			db->path_south = ft_strdup(t_path + length);
+		else if (t_path[0] == 'W' && t_path[1] == 'E')
+			db->path_west = ft_strdup(t_path + length);
+		else if (t_path[0] == 'E' && t_path[1] == 'A')
+			db->path_east = ft_strdup(t_path + length);
+		return ;
+	}
+	length = ft_strlen(t_path);
+	while (length >= 0 && t_path[length] != ' ')
+		length--;
+	if (t_path[0] == 'F')
+		db->floor_color = ft_strdup(t_path + length + 1);
+	else if (t_path[0] == 'C')
+		db->cieling_color = ft_strdup(t_path + length + 1);
+}
 
 int	check_texture(t_db *db)
 {
@@ -92,8 +99,12 @@ int	check_texture(t_db *db)
 	if(j == 6 || tab2[0] != 1 || tab2[1] != 1 || tab2[2] != 1
 		|| tab2[3] != 1 || tab2[4] != 1 || tab2[5] != 1)
 		return (0);
-	//else
-		//load_texture(db);
+	i = 0;
+	while(db->map->texture_path[i])
+	{
+		load_texture(db, db->map->texture_path[i]);
+		i++;
+	}
 	return (1);
 }
 
@@ -116,10 +127,13 @@ int is_rounded(t_db *db, int x, int y)
         is_rounded(db, x, y + 1);
     if(db->map->map[x] && db->map->map[x][y] == '0')
     {
-        if((x == 0 || y == 0 || x == map_len - 1 || y == map_len - 1
+        if(!db->map->map[x + 1][y] || !db->map->map[x - 1][y] || x == 0 || y == 0 || x == map_len - 1 || y == map_len - 1
 		|| db->map->map[x - 1][y] == ' ' || db->map->map[x + 1][y] == ' ' 
-        || db->map->map[x][y - 1] == ' ' || db->map->map[x][y + 1] == ' ' ))
-            is_close = 1;
+        || db->map->map[x][y - 1] == ' ' || db->map->map[x][y + 1] == ' ' )
+		{
+			is_close = 1;
+			return (is_close);
+		}
         is_rounded(db, x, y + 1);
     }
     return(is_close);
