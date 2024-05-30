@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:35:07 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/28 15:40:00 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/30 13:31:26 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	set_player_position(t_db *db)
 			{
 				db->player_y = i;
 				db->player_x = j;
+				db->orientation = db->map->map[i][j];
 			}
 			j++;
 		}

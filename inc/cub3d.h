@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/28 17:43:44 by rheck            ###   ########.fr       */
+/*   Updated: 2024/05/30 16:08:59 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <math.h>
 # include "../inc/get_next_line.h"
 # include "../libft/libft.h"
+
+# define S_W 1024
+# define S_H 512
 
 typedef struct s_map
 {
@@ -46,9 +50,30 @@ typedef struct s_db
 	char	*path_west;
 	char	*floor_color;
 	char	*cieling_color;
+	char	orientation;
 	double	player_x;
 	double	player_y;
 	t_map 	*map;
+	int		mapX;
+	int		mapY;
+	double	cameraX ; //x-coordinate in camera space
+    double	rayDirX;
+    double	rayDirY;
+	double	dir_x;
+	double	dir_y;
+	int		stepX;
+	int		stepY;
+	int		side; //was a NS or a EW wall hit?
+	int		hit; //was there a wall hit?
+	double	planeX;
+	double	planeY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		s_w;
+	int		s_h;
 }				t_db;
 
 
