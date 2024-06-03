@@ -6,11 +6,13 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/30 16:09:51 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/03 15:08:28 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+void	drawVerLine(t_db *db, int x, int drawStart, int drawEnd, int color);
 
 void	mlx_start(t_db *db)
 {
@@ -26,8 +28,25 @@ void	mlx_start(t_db *db)
 	}
 	
 }
+unsigned int randomcolor()
+{
+    // Initialiser le générateur de nombres aléatoires avec le temps actuel
+    //srand(time(NULL));
 
-void game_loop(void *d) // game loop
+    // Générer des composantes rouge, verte et bleue aléatoires
+    unsigned char rouge = rand() % 256;
+    unsigned char vert = rand() % 256;
+    unsigned char bleu = rand() % 256;
+	// rouge = 20;
+	// vert = 40;
+	// bleu = 100;
+    // Combiner les composantes en un seul entier RGB
+    unsigned int couleur = (rouge << 16) | (vert << 8) | bleu;
+
+    return couleur;
+}
+
+int game_loop(void *d) // game loop
 	{
 		t_db *db;
 
@@ -51,53 +70,83 @@ void game_loop(void *d) // game loop
 			db->deltaDistX = (db->rayDirX == 0) ? 1e30 : fabs(1 / db->rayDirX);
 			db->deltaDistY = (db->rayDirY == 0) ? 1e30 : fabs(1 / db->rayDirY);
 			db->hit = 0; //was there a wall hit?
+			 //calculate step and initial sideDist
+			if (db->rayDirX < 0)
+			{
+				db->stepX = -1;
+				db->sideDistX = (db->player_x - db->mapX) * db->deltaDistX;
+			}
+			else
+			{
+				db->stepX = 1;
+				db->sideDistX = (db->mapX + 1.0 - db->player_x) * db->deltaDistX;
+			}
+			if (db->rayDirY < 0)
+			{
+				db->stepY = -1;
+				db->sideDistY = (db->player_y - db->mapY) * db->deltaDistY;
+			}
+			else
+			{
+				db->stepY = 1;
+				db->sideDistY = (db->mapY + 1.0 - db->player_y) * db->deltaDistY;
+			}
+			while (db->hit == 0)
+			{
+				//jump to next map square, either in x-direction, or in y-direction
+				if (db->sideDistX < db->sideDistY)
+				{
+					db->sideDistX += db->deltaDistX;
+					db->mapX += db->stepX;
+					db->side = 0;
+				}
+				else
+				{
+					db->sideDistY += db->deltaDistY;
+					db->mapY += db->stepY;
+					db->side = 1;
+				}
+				//Check if ray has hit a wall
+				if (db->map->map[db->mapX][db->mapY] > 0) 
+					db->hit = 1;
+    		}
+			if(db->side == 0) 
+				db->perpWallDist = (db->sideDistX - db->deltaDistX);
+      		else
+				db->perpWallDist = (db->sideDistY - db->deltaDistY);
+			//Calculate height of line to draw on screen
+			int h = db->mapY + (1 - db->stepY) / 2;
+      		int lineHeight = (int)(h / db->perpWallDist);
+
+      		//calculate lowest and highest pixel to fill in current stripe
+      		int drawStart = -lineHeight / 2 + h / 2;
+     		if(drawStart < 0)
+				drawStart = 0;
+     		int drawEnd = lineHeight / 2 + h / 2;
+      		if(drawEnd >= h)
+				drawEnd = h - 1;
+			int color = randomcolor();
+
+      		//give x and y sides different brightness
+      		if (db->side == 1) 
+				color = color / 2;
+
+      		//draw the pixels of the stripe as a vertical line
+      		drawVerLine(db, x, drawStart, drawEnd, color);
 		}
+		return(0);
 	}
 
-// int	handle_events(int keycode, t_db *db)
-// {
+void	drawVerLine(t_db *db, int x, int drawStart, int drawEnd, int color)
+{
+	int i = drawStart;
 
-// 	if (keycode == ESC)
-// 	{
-// 		mlx_destroy_window(db->mlx, db->win);
-// 		free_db(db);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	if (keycode == D)
-// 		move->x = 1;
-// 	if (keycode == S)
-// 		move->y = 1;
-// 	if (keycode == A)
-// 		move->x = -1;
-// 	if (keycode == W)
-// 		move->y = -1;
-// 	if (keycode == D || keycode == W || keycode == S || keycode == A)
-// 		move_player(db, move);
-// 	return (1);
-// }
-
-// void	mlx_events(t_db *db)
-// {
-// 	mlx_hook(db->win, 17, 0, destroy_window, NULL);
-// 	mlx_hook(db->win, 2, 1L << 0, handle_events, db);
-// 	mlx_loop(db->mlx);
-// }
-
-// void	draw_white(t_db *db, int x, int y)
-// {
-// 	int i = x;
-// 	int j = y;
-// 	while (x < i + 60)
-// 	{
-// 		int y = 0;
-// 		while (y < j + 60)
-// 		{
-// 			mlx_pixel_put(db->mlx, db->win, x, y, 0x99999);
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// }
+	while (i <= drawEnd)
+	{
+		mlx_pixel_put(db->mlx, db->win, i, x,color);
+		i++;		
+	}
+}
 
 void draw_square(t_db *db, int start_x, int start_y, int side_length, int color)
 {
@@ -127,13 +176,13 @@ void draw_ray(t_db *db, int start_x, int start_y, int side_length, int color)
 	{
 		
 	}
-    while (y < start_y + side_length)
+    while (y < (start_y + side_length))
     {
         x = start_x;
-        while (x < start_x + side_length)
+        while (x < (start_x + side_length))
         {
-           mlx_pixel_put(db->mlx, db->win, x, y, color);
-            x++;
+        	mlx_pixel_put(db->mlx, db->win, x, y, color);
+        	x++;
         }
         y++;
     }
@@ -166,7 +215,7 @@ void	display_map(t_db *db)
 			{
 				draw_square(db, j * 120, i * 120, 120, 0xfffffff);
 				draw_square(db, j * 120 + 50, i * 120 + 50, 20, 0x93c47d);
-				draw_ray(db, j * 120 + 60, i * 120 + 60, 20, 0xea3131);
+				draw_ray(db, j * 120 + 56, i * 120 + 56, 20, 0xea3131); // changer 20 -> 5 et 60 -> 56
 			}
 			j++;
 		}
@@ -174,7 +223,12 @@ void	display_map(t_db *db)
 		
 	}
 }
-
+int	user_input(int keycode, t_db *db)
+{
+	(void)keycode;
+	(void)db;
+	return(0);
+}
 int main (int argc, char **argv)
 {
 	t_db	*db;
@@ -194,11 +248,10 @@ int main (int argc, char **argv)
 	db->mlx = mlx_init();
 	mlx_start(db);
 	mlx_hook(db->win, 17, 0, destroy_window, NULL);
-	display_map(db);
-	//mlx_loop_hook(db->mlx, (int)&game_loop, &db); // game loop continuously call a specified function to update the game state and render the frames.
+	mlx_key_hook(db->win, user_input, db);
+	//display_map(db);
+	mlx_loop_hook(db->mlx, &game_loop, db); // game loop continuously call a specified function to update the game state and render the frames.
 	//mlx_key_hook(db->mlx, &mlx_key, &db); // key press and release
 	mlx_loop(db->mlx); // mlx loop
 	return (0);
 }
-
-
