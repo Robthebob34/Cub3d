@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:35:07 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/30 13:31:26 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:26:01 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	set_player_position(t_db *db)
 			if (db->map->map[i][j] == 'N' || db->map->map[i][j] == 'E'
 				|| db->map->map[i][j] == 'W' || db->map->map[i][j] == 'S')
 			{
-				db->player_y = i;
-				db->player_x = j;
+				db->player_y = i + 0.5;
+				db->player_x = j + 0.5;
+				printf("y : %d x : %d\n", i, j);
 				db->orientation = db->map->map[i][j];
 			}
 			j++;

@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/05/30 16:08:59 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/05 16:37:42 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,20 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <time.h>
 # include <math.h>
 # include "../inc/get_next_line.h"
 # include "../libft/libft.h"
 
 # define S_W 1024
 # define S_H 512
+# define ESC 53
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define ROT_SPEED 0.3
+# define MOV_SPEED 0.5
 
 typedef struct s_map
 {
@@ -72,6 +80,8 @@ typedef struct s_db
 	double	deltaDistX;
 	double	deltaDistY;
 	double	perpWallDist;
+	double	rotSpeed;
+	double	moveSpeed;
 	int		s_w;
 	int		s_h;
 }				t_db;
