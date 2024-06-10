@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/10 15:43:21 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/10 16:52:39 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <math.h>
 # include "../libft/libft.h"
 
-# define S_W 1024
-# define S_H 512
+# define S_W 2048
+# define S_H 1024
 # define ESC 53
 # define W 13
 # define A 0
