@@ -39,7 +39,9 @@ SRCS =	ft_isalpha.c\
 		ft_write_other_types.c\
 		ft_write_pointer.c\
 		ft_write_types.c\
-		ft_itoa_u.c
+		ft_itoa_u.c\
+		get_next_line.c\
+		get_nex_line_utils.c
 		
 SRCS_BONUS =	ft_lstnew.c\
 				ft_lstadd_front.c\

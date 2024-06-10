@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/05 16:37:42 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:43:21 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <fcntl.h>
 # include <time.h>
 # include <math.h>
-# include "../inc/get_next_line.h"
 # include "../libft/libft.h"
 
 # define S_W 1024
@@ -32,6 +31,30 @@
 # define D 2
 # define ROT_SPEED 0.3
 # define MOV_SPEED 0.5
+
+
+typedef struct s_img
+{
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
+	int				*floor;
+	int				*ceiling;
+	unsigned long	hex_floor;
+	unsigned long	hex_ceiling;
+	int				size;
+	int				index;
+	double			step;
+	double			pos;
+	int				x;
+	int				y;
+}	t_img;
 
 typedef struct s_map
 {
@@ -46,12 +69,13 @@ typedef struct s_db
 	void	*mlx;
 	void	*win;
 	void	*img;
+	t_img	*w_image;
 	void	*F;
 	void	*C;
-	void	*NO;
-	void	*SO;
-	void	*EA;
-	void	*WE;
+	int		*NO;
+	int		*SO;
+	int		*EA;
+	int		*WE;
 	char	*path_north;
 	char	*path_south;
 	char	*path_east;
@@ -84,6 +108,7 @@ typedef struct s_db
 	double	moveSpeed;
 	int		s_w;
 	int		s_h;
+	t_img	db_img;
 }				t_db;
 
 

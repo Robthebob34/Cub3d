@@ -6,11 +6,11 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:21:46 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/22 11:21:48 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/07 12:54:55 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/get_next_line.h"
+#include "get_next_line.h"
 
 char	*empty_line(char **tmp, char **start_str)
 {

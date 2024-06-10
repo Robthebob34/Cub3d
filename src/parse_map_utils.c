@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/28 12:45:17 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/10 13:16:52 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	load_texture(t_db *db, char *t_path)
 	int	length;
 
 	length = ft_strlen(t_path);
+	length -= 5;
 	while (length >= 0 && t_path[length] != '.')
 		length--;
 	if (length > 0)

@@ -6,11 +6,11 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 11:21:58 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/22 11:22:10 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/07 12:55:01 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/get_next_line.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen_gnl(char	*str)
 {
