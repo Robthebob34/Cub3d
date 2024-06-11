@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/10 16:52:39 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 12:47:07 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define A 0
 # define S 1
 # define D 2
-# define ROT_SPEED 0.3
+# define ROT_SPEED 0.25
 # define MOV_SPEED 0.5
 
 
@@ -122,6 +122,10 @@ int		verfiy_characters(t_db *db);
 
 //window events
 int		destroy_window(t_db *data);
+void	drawVerLine(t_db *db, int x, int drawStart, int drawEnd, int color);
+void   image_init(t_db *db, char *path);
+void	drawframeLine(t_db *db);
+void	set_image_pixel(t_img *image, int x, int y, int color);
 
 //player
 void	set_player_position(t_db *db);

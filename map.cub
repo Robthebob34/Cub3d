@@ -1,7 +1,7 @@
-NO ./src/eagle.xpm
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
-SO ./path_to_the_south_texture
+NO ./textures/blue_stone.xpm
+WE ./textures/eagle.xpm
+EA ./textures/mossy.xpm
+SO ./textures/wood.xpm
 F   220,100,0
 C   225,30,0
 

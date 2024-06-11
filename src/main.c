@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/10 18:02:27 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 13:43:54 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,39 @@
 
 
 u_int32_t	buffer[S_H][S_W];
-void	drawVerLine(t_db *db, int x, int drawStart, int drawEnd, int color);
-void   image_init(t_db *db, char *path);
-void	drawframeLine(t_db *db);
-void	set_image_pixel(t_img *image, int x, int y, int color);
+
+void	set_direction(t_db *db)
+{
+	if (db->orientation == 'N')
+	{
+		db->planeX = 0.66;
+    	db->planeY = 0;
+		db->dir_x = 0;
+    	db->dir_y = -1;
+	}
+	if (db->orientation == 'E')
+	{
+		db->planeX = 0;
+    	db->planeY = 0.66;
+		db->dir_x = 1;
+    	db->dir_y = 0;
+	}
+	if (db->orientation == 'S')
+	{
+		db->planeX = -0.66;
+    	db->planeY = 0;
+		db->dir_x = 0;
+    	db->dir_y = 1;
+	}
+	if (db->orientation == 'W')
+	{
+		db->planeX = 0;
+    	db->planeY = -0.66;
+		db->dir_x = -1;
+    	db->dir_y = 0;
+	}
+	
+}
 
 void	mlx_start(t_db *db)
 {
@@ -31,27 +60,18 @@ void	mlx_start(t_db *db)
 	{
 		exit(EXIT_FAILURE);
 	}
-   
-    db->planeX = 0.66;
-    db->planeY = 0; //the 2d raycaster version of camera plane
-
-    db->s_w = S_W;
-    db->dir_x = 0;
-    db->dir_y = -1;
-	db->rotSpeed = ROT_SPEED;
-    db->moveSpeed = MOV_SPEED;
+	set_direction(db);
 }
 
 int game_loop(void *d) // game loop
 {
-    t_db *db;
-
+    t_db	*db;
+	int		color;
     db = d;
-    //mlx_clear_window(db->mlx, db->win);
     for (int x = 0; x < S_W; x++)
     {
         // calculate ray position and direction
-        db->cameraX = 2 * x / (double)db->s_w - 1; // x-coordinate in camera space
+        db->cameraX = 2 * x / (double)S_W - 1; // x-coordinate in camera space
         db->rayDirX = db->dir_x + db->planeX * db->cameraX;
         db->rayDirY = db->dir_y + db->planeY * db->cameraX;
         db->deltaDistX = fabs(1 / db->rayDirX);
@@ -111,22 +131,20 @@ int game_loop(void *d) // game loop
         else
             db->perpWallDist = (db->sideDistY - db->deltaDistY);
 
-        //calculate value of wallX
-      double wallX; //where exactly the wall was hit
-      if (db->side == 0)
-        wallX = db->player_y + db->perpWallDist * db->rayDirY;
-      else 
-        wallX = db->player_x + db->perpWallDist * db->rayDirX;
+    	double wallX; //where exactly the wall was hit
+    	if (db->side == 0)
+        	wallX = db->player_y + db->perpWallDist * db->rayDirY;
+    	else 
+    		wallX = db->player_x + db->perpWallDist * db->rayDirX;
       
-      wallX -= floor((wallX));
-      int texX = wallX * (double)db->db_img.size;
-	   
-      if(db->side == 0 && db->rayDirX < 0)
-        texX = db->db_img.size - texX - 1;
-      if(db->side == 1 && db->rayDirY > 0)
-        texX = db->db_img.size - texX - 1;
-	//  printf("2 textX : %d\n", texX);
-	
+    	wallX -= floor((wallX));
+    	int texX = wallX * (double)db->db_img.size;
+
+		if(db->side == 0 && db->rayDirX < 0)
+        	texX = db->db_img.size - texX - 1;
+    	if(db->side == 1 && db->rayDirY > 0)
+        	texX = db->db_img.size - texX - 1;
+
         int lineHeight = (int)(S_H / db->perpWallDist);
         int drawStart = -lineHeight / 2 + S_H / 2;
         if (drawStart < 0)
@@ -144,14 +162,14 @@ int game_loop(void *d) // game loop
         {
            int texY = (int)texPos & (db->db_img.size - 1);
            texPos += step;
-		   //printf("cursor : %d\n", db->db_img.size * texY + texX);
-		   //printf("3textX : %d\n", texX);
-           int color = db->NO[db->db_img.size * texY + texX];
-		//    for (int v = 0; v < db->db_img.size * db->db_img.size; v += db->db_img.size)
-		//    	{
-		// 		if (x == 1)
-		// 			printf("|%d|  ", db->NO[v]);
-		// 	}
+			if (db->side == 1 && db->rayDirY < 0)
+        		color = db->NO[db->db_img.size * texY + texX];
+			else if (db->side == 1 && db->rayDirY > 0)
+        		color = db->SO[db->db_img.size * texY + texX];
+			else if (db->side == 0 && db->rayDirX < 0)
+        		color = db->WE[db->db_img.size * texY + texX];
+			else if (db->side == 0 && db->rayDirX > 0)
+        		color = db->EA[db->db_img.size * texY + texX];
 			set_image_pixel(db->w_image, x, y, color);
     	}
 		for(int j = drawEnd; j < S_H; j++)
@@ -185,34 +203,34 @@ int	key_hook(int keycode, t_db *db)
 	if (keycode == D)
 	{
       double oldDirX = db->dir_x;
-      db->dir_x = db->dir_x * cos(db->rotSpeed) - db->dir_y * sin(db->rotSpeed);
-      db->dir_y = oldDirX * sin(db->rotSpeed) + db->dir_y * cos(db->rotSpeed);
+      db->dir_x = db->dir_x * cos(ROT_SPEED) - db->dir_y * sin(ROT_SPEED);
+      db->dir_y = oldDirX * sin(ROT_SPEED) + db->dir_y * cos(ROT_SPEED);
       double oldPlaneX = db->planeX;
-      db->planeX = db->planeX * cos(db->rotSpeed) - db->planeY * sin(db->rotSpeed);
-      db->planeY = oldPlaneX * sin(db->rotSpeed) + db->planeY * cos(db->rotSpeed);
+      db->planeX = db->planeX * cos(ROT_SPEED) - db->planeY * sin(ROT_SPEED);
+      db->planeY = oldPlaneX * sin(ROT_SPEED) + db->planeY * cos(ROT_SPEED);
 	}
 	if (keycode == A)
 	{
       double oldDirX = db->dir_x;
-      db->dir_x = db->dir_x * cos(-db->rotSpeed) - db->dir_y * sin(-db->rotSpeed);
-      db->dir_y = oldDirX * sin(-db->rotSpeed) + db->dir_y * cos(-db->rotSpeed);
+      db->dir_x = db->dir_x * cos(-ROT_SPEED) - db->dir_y * sin(-ROT_SPEED);
+      db->dir_y = oldDirX * sin(-ROT_SPEED) + db->dir_y * cos(-ROT_SPEED);
       double oldPlaneX = db->planeX;
-      db->planeX = db->planeX * cos(-db->rotSpeed) - db->planeY * sin(-db->rotSpeed);
-      db->planeY = oldPlaneX * sin(-db->rotSpeed) + db->planeY * cos(-db->rotSpeed);
+      db->planeX = db->planeX * cos(-ROT_SPEED) - db->planeY * sin(-ROT_SPEED);
+      db->planeY = oldPlaneX * sin(-ROT_SPEED) + db->planeY * cos(-ROT_SPEED);
 	}
 	if (keycode == W)
 	{
-        if(db->map->map[(int)(db->player_y)][(int)(db->player_x + db->dir_x * db->moveSpeed)] != '1')
-            db->player_x += db->dir_x * db->moveSpeed;
-        if(db->map->map[(int)(db->player_y + db->dir_y * db->moveSpeed)][(int)(db->player_x)] != '1')
-            db->player_y += db->dir_y * db->moveSpeed;
+        if(db->map->map[(int)(db->player_y)][(int)(db->player_x + db->dir_x * MOV_SPEED)] != '1')
+            db->player_x += db->dir_x * MOV_SPEED;
+        if(db->map->map[(int)(db->player_y + db->dir_y * MOV_SPEED)][(int)(db->player_x)] != '1')
+            db->player_y += db->dir_y * MOV_SPEED;
 	}
 	if (keycode == S)
 	{
-		if(db->map->map[(int)(db->player_y)][(int)(db->player_x - db->dir_x * db->moveSpeed)] != '1')
-            db->player_x -= db->dir_x * db->moveSpeed;
-        if(db->map->map[(int)(db->player_y - db->dir_y * db->moveSpeed)][(int)(db->player_x)] != '1')
-            db->player_y -= db->dir_y * db->moveSpeed;
+		if(db->map->map[(int)(db->player_y)][(int)(db->player_x - db->dir_x * MOV_SPEED)] != '1')
+            db->player_x -= db->dir_x * MOV_SPEED;
+        if(db->map->map[(int)(db->player_y - db->dir_y * MOV_SPEED)][(int)(db->player_x)] != '1')
+            db->player_y -= db->dir_y * MOV_SPEED;
     }
 	return (0);
 }
@@ -251,9 +269,9 @@ void	set_image_pixel(t_img *image, int x, int y, int color)
 void	init_textures(t_db *data)
 {
 	data->NO = xpm_to_img(data, data->path_north);
-	data->SO = xpm_to_img(data, data->path_north);
-	data->EA = xpm_to_img(data, data->path_north);
-	data->WE = xpm_to_img(data, data->path_north);
+	data->SO = xpm_to_img(data, data->path_south);
+	data->EA = xpm_to_img(data, data->path_east);
+	data->WE = xpm_to_img(data, data->path_west);
 }
 
 void	init_img_clean(t_img *img)
@@ -272,7 +290,6 @@ void	init_img(t_db *data)
 		printf("tkt pour plus tard");
 	data->w_image->addr = (int *)mlx_get_data_addr(data->w_image->img, &data->w_image->pixel_bits,
 			&data->w_image->size_line, &data->w_image->endian);
-	printf("init : %p\n", data->w_image->addr);
 	return ;
 }
 
@@ -305,12 +322,10 @@ int main (int argc, char **argv)
 	set_player_position(db);
 	db->mlx = mlx_init();
 	mlx_start(db);
-    printf("path : %s\n", db->path_north);
     init_textures(db);
 	init_img_clean(db->w_image);
 	init_img(db);
 	mlx_hook(db->win, 17, 0, destroy_window, NULL);
-	printf("MAIN plane x : %f plane : y %f\n", db->planeX, db->planeY);
 	mlx_hook(db->win, 2, 0,&key_hook, db); // key press and release
 	mlx_loop_hook(db->mlx, &game_loop, db); // game loop continuously call a specified function to update the game state and render the frames.
 	mlx_loop(db->mlx); // mlx loop
