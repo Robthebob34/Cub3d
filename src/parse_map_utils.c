@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/11 15:20:34 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 16:11:44 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ int is_rounded(t_db *db, int x, int y)
         is_rounded(db, x, y + 1);
     if(db->map->map[x] && db->map->map[x][y] == '0')
     {
-        if(!db->map->map[x + 1][y] || !db->map->map[x - 1][y] || x == 0 || y == 0 || x == map_len - 1 || y == map_len - 1
+        if(!db->map->map[x + 1][y] || !db->map->map[x - 1][y] || x == 0
+		|| y == 0 || x == map_len - 1 || y == map_len - 1
 		|| db->map->map[x - 1][y] == ' ' || db->map->map[x + 1][y] == ' ' 
         || db->map->map[x][y - 1] == ' ' || db->map->map[x][y + 1] == ' ' )
 		{
