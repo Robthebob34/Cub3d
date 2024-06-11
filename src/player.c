@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:35:07 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/11 15:20:51 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 17:25:43 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	set_player_position(t_db *db)
 	int	j;
 
 	i = 0;
-	while(db->map->map[i])
+	while (db->map->map[i])
 	{
 		j = 0;
-		while(db->map->map[i][j])
+		while (db->map->map[i][j])
 		{
 			if (db->map->map[i][j] == 'N' || db->map->map[i][j] == 'E'
 				|| db->map->map[i][j] == 'W' || db->map->map[i][j] == 'S')
@@ -34,4 +34,5 @@ void	set_player_position(t_db *db)
 		}
 		i++;
 	}
+	db->mlx = mlx_init();
 }

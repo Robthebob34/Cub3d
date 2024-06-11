@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:35:49 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/07 12:54:08 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 17:21:49 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include "get_next_line.h"
+
 typedef struct s_list
 {
 	void			*content;

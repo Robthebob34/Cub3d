@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/11 16:24:53 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 17:42:23 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_db
 	int		drawEnd;
 	double	step;
 	double	texPos;
+	u_int32_t	buffer[S_H][S_W];
 }				t_db;
 
 
@@ -130,7 +131,7 @@ int		verfiy_characters(t_db *db);
 
 int		destroy_window(t_db *data);
 void	image_init(t_db *db, char *path);
-void	drawframeLine(t_db *db);
+void	draw_frame_line(t_db *db);
 void	set_image_pixel(t_img *image, int x, int y, int color);
 void	init_textures(t_db *data);
 void	set_player_position(t_db *db);
@@ -139,5 +140,11 @@ void	init_img(t_db *data);
 void	image_init(t_db *db, char *path);
 int		game_loop(void *d);
 int		key_hook(int keycode, t_db *db);
+void	mlx_start(t_db *db);
+void	set_direction(t_db *db);
+void	initialise_tabs(char tab[6][6], int tab2[6]);
+int		verify_texture(int j, int tab2[], int i, t_db *db);
+void	load_texture(t_db *db, char *t_path);
+void	draw_wall(t_db *db, int x, int j);
 
 #endif

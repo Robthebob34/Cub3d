@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:02:58 by rheck             #+#    #+#             */
-/*   Updated: 2024/05/27 17:38:05 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 17:21:26 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	verfiy_characters(t_db *db)
 	i = 0;
 	if (!db->map->map)
 		return (0);
-	while(db->map->map[i])
+	while (db->map->map[i])
 	{
 		j = 0;
-		while(db->map->map[i][j])
+		while (db->map->map[i][j])
 		{
 			if (chars_check(db->map->map[i][j]))
 				return (0);

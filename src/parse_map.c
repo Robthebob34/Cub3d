@@ -6,28 +6,29 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:01:33 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/11 16:11:56 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 17:25:08 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int verify_extensention(char *file)
+int	verify_extensention(char *file)
 {
-    int len;
+	int	len;
 
-    len = ft_strlen(file);
-    if (len >= 5 && file[len - 2] == 'u' && file[len - 3] == 'c' && file[len - 4] == '.')
-        return (1);
+	len = ft_strlen(file);
+	if (len >= 5 && file[len - 2] == 'u'
+		&& file[len - 3] == 'c' && file[len - 4] == '.')
+		return (1);
 	printf("Error\nWrong map extension\n");
-    return (0);
+	return (0);
 }
 
-char **get_data(char **file)
+char	**get_data(char **file)
 {
 	char	**data;
 	int		i;
-	
+
 	i = 0;
 	data = NULL;
 	data = malloc(7 * sizeof(char *));
@@ -37,7 +38,7 @@ char **get_data(char **file)
 	{
 		data[i] = ft_read_line(file);
 		if (data[i] == NULL)
-			break;
+			break ;
 		i++;
 	}
 	data[i] = NULL;
@@ -70,10 +71,11 @@ char	*read_file(char *file)
 	close (fd);
 	return (long_file);
 }
+
 char	**remake_file(char *long_file)
 {
-	char **file;
-	
+	char	**file;
+
 	if (!long_file)
 	{
 		perror("Error\n");
@@ -84,7 +86,7 @@ char	**remake_file(char *long_file)
 	return (file);
 }
 
-int parse_map(char *file_path, t_db *db)
+int	parse_map(char *file_path, t_db *db)
 {
 	char	**file;
 
@@ -97,22 +99,6 @@ int parse_map(char *file_path, t_db *db)
 	db->map->map = get_map(file);
 	if (!db->map->map)
 		return (0);
-	int i = 0;
-	i = 0;
-	while (db->map->texture_path[i])
-	{
-		printf("%s\n",db->map->texture_path[i]);
-		i++;
-	}
-	printf("--------------------------------------\n");
-	i = 0;
-	if (!db->map->map)
-		printf("RIEN\n");
-	while (db->map->map[i])
-	{
-		printf("%s\n",db->map->map[i]);
-		i++;
-	}
-    return (verify_extensention(file_path) && check_texture(db)
+	return (verify_extensention(file_path) && check_texture(db)
 		&& !is_rounded(db, 0, 0) && verfiy_characters(db));
 }
