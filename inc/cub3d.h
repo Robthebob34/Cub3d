@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/11 15:18:26 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 16:24:53 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,13 @@ typedef struct s_db
 	int		s_w;
 	int		s_h;
 	t_img	db_img;
+	double	wallX;
+	int		texX;
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	double	step;
+	double	texPos;
 }				t_db;
 
 
