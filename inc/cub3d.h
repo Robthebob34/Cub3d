@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/11 12:47:07 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 15:18:26 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,14 +120,17 @@ char	**get_map(char **file);
 int		is_rounded(t_db *db, int x, int y);
 int		verfiy_characters(t_db *db);
 
-//window events
+
 int		destroy_window(t_db *data);
-void	drawVerLine(t_db *db, int x, int drawStart, int drawEnd, int color);
-void   image_init(t_db *db, char *path);
+void	image_init(t_db *db, char *path);
 void	drawframeLine(t_db *db);
 void	set_image_pixel(t_img *image, int x, int y, int color);
-
-//player
+void	init_textures(t_db *data);
 void	set_player_position(t_db *db);
+void	init_img_clean(t_img *img);
+void	init_img(t_db *data);
+void	image_init(t_db *db, char *path);
+int		game_loop(void *d);
+int		key_hook(int keycode, t_db *db);
 
 #endif

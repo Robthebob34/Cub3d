@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/10 13:16:52 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:34 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char *ft_read_line( char **file)
 	static int	i;
 	char		*line;
 	
-	printf("%d\n", i);
 	line = ft_strdup(file[i]);
 	i++;
 	return (line);

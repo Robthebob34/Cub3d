@@ -1,7 +1,7 @@
 NO ./textures/blue_stone.xpm
 WE ./textures/eagle.xpm
 EA ./textures/mossy.xpm
-SO ./textures/wood.xpm
+SO ./textures/red_brick.xpm
 F   220,100,0
 C   225,30,0
 
