@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:06:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/11 16:48:12 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 12:54:25 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	move_right(t_db *db)
 	old_dir_x = db->dir_x;
 	db->dir_x = db->dir_x * cos(ROT_SPEED) - db->dir_y * sin(ROT_SPEED);
 	db->dir_y = old_dir_x * sin(ROT_SPEED) + db->dir_y * cos(ROT_SPEED);
-	old_plane_x = db->planeX;
-	db->planeX = db->planeX * cos(ROT_SPEED) - db->planeY * sin(ROT_SPEED);
-	db->planeY = old_plane_x * sin(ROT_SPEED) + db->planeY * cos(ROT_SPEED);
+	old_plane_x = db->plane_x;
+	db->plane_x = db->plane_x * cos(ROT_SPEED) - db->plane_y * sin(ROT_SPEED);
+	db->plane_y = old_plane_x * sin(ROT_SPEED) + db->plane_y * cos(ROT_SPEED);
 }
 
 void	move_left(t_db *db)
@@ -33,9 +33,9 @@ void	move_left(t_db *db)
 	old_dir_x = db->dir_x;
 	db->dir_x = db->dir_x * cos(-ROT_SPEED) - db->dir_y * sin(-ROT_SPEED);
 	db->dir_y = old_dir_x * sin(-ROT_SPEED) + db->dir_y * cos(-ROT_SPEED);
-	old_plane_x = db->planeX;
-	db->planeX = db->planeX * cos(-ROT_SPEED) - db->planeY * sin(-ROT_SPEED);
-	db->planeY = old_plane_x * sin(-ROT_SPEED) + db->planeY * cos(-ROT_SPEED);
+	old_plane_x = db->plane_x;
+	db->plane_x = db->plane_x * cos(-ROT_SPEED) - db->plane_y * sin(-ROT_SPEED);
+	db->plane_y = old_plane_x * sin(-ROT_SPEED) + db->plane_y * cos(-ROT_SPEED);
 }
 
 void	move_forward(t_db *db)

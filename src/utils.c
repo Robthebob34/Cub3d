@@ -6,11 +6,48 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:14:42 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/11 17:47:36 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 12:57:25 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+void	set_direction_2(t_db *db)
+{
+	if (db->orientation == 'S')
+	{
+		db->plane_x = -0.66;
+		db->plane_y = 0;
+		db->dir_x = 0;
+		db->dir_y = 1;
+	}
+	else if (db->orientation == 'W')
+	{
+		db->plane_x = 0;
+		db->plane_y = -0.66;
+		db->dir_x = -1;
+		db->dir_y = 0;
+	}
+}
+
+void	set_direction(t_db *db)
+{
+	if (db->orientation == 'N')
+	{
+		db->plane_x = 0.66;
+		db->plane_y = 0;
+		db->dir_x = 0;
+		db->dir_y = -1;
+	}
+	else if (db->orientation == 'E')
+	{
+		db->plane_x = 0;
+		db->plane_y = 0.66;
+		db->dir_x = 1;
+		db->dir_y = 0;
+	}
+	set_direction_2(db);
+}
 
 void	draw_wall(t_db *db, int x, int j)
 {
@@ -18,16 +55,16 @@ void	draw_wall(t_db *db, int x, int j)
 	int	tex_y;
 
 	color = 0;
-	tex_y = (int)db->texPos & (db->db_img.size - 1);
-	db->texPos += db->step;
-	if (db->side == 1 && db->rayDirY < 0)
-		color = db->NO[db->db_img.size * tex_y + db->texX];
-	else if (db->side == 1 && db->rayDirY > 0)
-		color = db->SO[db->db_img.size * tex_y + db->texX];
-	else if (db->side == 0 && db->rayDirX < 0)
-		color = db->WE[db->db_img.size * tex_y + db->texX];
-	else if (db->side == 0 && db->rayDirX > 0)
-		color = db->EA[db->db_img.size * tex_y + db->texX];
+	tex_y = (int)db->tex_pos & (db->db_img.size - 1);
+	db->tex_pos += db->step;
+	if (db->side == 1 && db->ray_dir_y < 0)
+		color = db->no[db->db_img.size * tex_y + db->tex_x];
+	else if (db->side == 1 && db->ray_dir_y > 0)
+		color = db->so[db->db_img.size * tex_y + db->tex_x];
+	else if (db->side == 0 && db->ray_dir_x < 0)
+		color = db->we[db->db_img.size * tex_y + db->tex_x];
+	else if (db->side == 0 && db->ray_dir_x > 0)
+		color = db->ea[db->db_img.size * tex_y + db->tex_x];
 	set_image_pixel(db->w_image, x, j, color);
 }
 

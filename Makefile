@@ -6,12 +6,12 @@
 #    By: rheck <rheck@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/28 12:47:51 by rheck             #+#    #+#              #
-#    Updated: 2024/05/28 12:49:35 by rheck            ###   ########.fr        #
+#    Updated: 2024/06/12 12:40:47 by rheck            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g -o3
 MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
 INC_DIR = ./inc
 LIBFT_DIR = ./libft

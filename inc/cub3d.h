@@ -6,14 +6,14 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/11 17:42:23 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 13:00:36 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <stdio.h>
+# include <stdio.h>
 # include <mlx.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -32,14 +32,13 @@
 # define ROT_SPEED 0.25
 # define MOV_SPEED 0.5
 
-
 typedef struct s_img
 {
-	void	*img;
-	int		*addr;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
+	void			*img;
+	int				*addr;
+	int				pixel_bits;
+	int				size_line;
+	int				endian;
 	char			*north;
 	char			*south;
 	char			*west;
@@ -66,69 +65,63 @@ typedef struct s_map
 
 typedef struct s_db
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	t_img	*w_image;
-	void	*F;
-	void	*C;
-	int		*NO;
-	int		*SO;
-	int		*EA;
-	int		*WE;
-	char	*path_north;
-	char	*path_south;
-	char	*path_east;
-	char	*path_west;
-	char	*floor_color;
-	char	*cieling_color;
-	char	orientation;
-	double	player_x;
-	double	player_y;
-	t_map 	*map;
-	int		mapX;
-	int		mapY;
-	double	cameraX ; //x-coordinate in camera space
-    double	rayDirX;
-    double	rayDirY;
-	double	dir_x;
-	double	dir_y;
-	int		stepX;
-	int		stepY;
-	int		side; //was a NS or a EW wall hit?
-	int		hit; //was there a wall hit?
-	double	planeX;
-	double	planeY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	double	rotSpeed;
-	double	moveSpeed;
-	int		s_w;
-	int		s_h;
-	t_img	db_img;
-	double	wallX;
-	int		texX;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-	double	step;
-	double	texPos;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	t_img		*w_image;
+	void		*floor;
+	void		*c;
+	int			*no;
+	int			*so;
+	int			*ea;
+	int			*we;
+	char		*path_north;
+	char		*path_south;
+	char		*path_east;
+	char		*path_west;
+	char		*floor_color;
+	char		*cieling_color;
+	char		orientation;
+	double		player_x;
+	double		player_y;
+	t_map		*map;
+	int			map_x;
+	int			map_y;
+	double		camera_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		dir_x;
+	double		dir_y;
+	int			step_x;
+	int			step_y;
+	int			side;
+	int			hit;
+	double		plane_x;
+	double		plane_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		p_wall_dist;
+	int			s_w;
+	int			s_h;
+	t_img		db_img;
+	double		wall_x;
+	int			tex_x;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	double		step;
+	double		tex_pos;
 	u_int32_t	buffer[S_H][S_W];
 }				t_db;
 
-
-//parsing
-int 	parse_map(char *file, t_db *db);
-char 	*ft_read_line( char **file);
+int		parse_map(char *file, t_db *db);
+char	*ft_read_line( char **file);
 int		check_texture(t_db *db);
 char	**get_map(char **file);
 int		is_rounded(t_db *db, int x, int y);
 int		verfiy_characters(t_db *db);
-
-
 int		destroy_window(t_db *data);
 void	image_init(t_db *db, char *path);
 void	draw_frame_line(t_db *db);
@@ -142,6 +135,8 @@ int		game_loop(void *d);
 int		key_hook(int keycode, t_db *db);
 void	mlx_start(t_db *db);
 void	set_direction(t_db *db);
+void	draw_image(t_db *db, int x);
+void	set_direction_2(t_db *db);
 void	initialise_tabs(char tab[6][6], int tab2[6]);
 int		verify_texture(int j, int tab2[], int i, t_db *db);
 void	load_texture(t_db *db, char *t_path);

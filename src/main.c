@@ -6,47 +6,32 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/11 16:58:25 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 12:57:14 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	set_direction_2(t_db *db)
+void	draw_image(t_db *db, int x)
 {
-	if (db->orientation == 'S')
-	{
-		db->planeX = -0.66;
-		db->planeY = 0;
-		db->dir_x = 0;
-		db->dir_y = 1;
-	}
-	else if (db->orientation == 'W')
-	{
-		db->planeX = 0;
-		db->planeY = -0.66;
-		db->dir_x = -1;
-		db->dir_y = 0;
-	}
-}
+	int	j;
 
-void	set_direction(t_db *db)
-{
-	if (db->orientation == 'N')
+	j = 0;
+	while (j < db->draw_start)
 	{
-		db->planeX = 0.66;
-		db->planeY = 0;
-		db->dir_x = 0;
-		db->dir_y = -1;
+		set_image_pixel(db->w_image, x, j, 3071725);
+		j++;
 	}
-	else if (db->orientation == 'E')
+	while (j < db->draw_end)
 	{
-		db->planeX = 0;
-		db->planeY = 0.66;
-		db->dir_x = 1;
-		db->dir_y = 0;
+		draw_wall(db, x, j);
+		j++;
 	}
-	set_direction_2(db);
+	while (j < S_H)
+	{
+		set_image_pixel(db->w_image, x, j, 2382603);
+		j++;
+	}
 }
 
 void	draw_frame_line(t_db *db)

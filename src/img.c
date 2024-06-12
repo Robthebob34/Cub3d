@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:00:25 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/11 16:43:56 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 12:48:53 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	*xpm_to_img(t_db *data, char *path)
 
 void	init_textures(t_db *data)
 {
-	data->NO = xpm_to_img(data, data->path_north);
-	data->SO = xpm_to_img(data, data->path_south);
-	data->EA = xpm_to_img(data, data->path_east);
-	data->WE = xpm_to_img(data, data->path_west);
+	data->no = xpm_to_img(data, data->path_north);
+	data->so = xpm_to_img(data, data->path_south);
+	data->ea = xpm_to_img(data, data->path_east);
+	data->we = xpm_to_img(data, data->path_west);
 }
 
 void	init_img_clean(t_img *img)

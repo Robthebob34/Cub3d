@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:04:29 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/11 17:51:16 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 13:01:23 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,41 @@
 
 void	set_data(t_db *db, int x)
 {
-	db->cameraX = 2 * x / (double)S_W - 1;
-	db->rayDirX = db->dir_x + db->planeX * db->cameraX;
-	db->rayDirY = db->dir_y + db->planeY * db->cameraX;
-	db->deltaDistX = fabs(1 / db->rayDirX);
-	db->deltaDistY = fabs(1 / db->rayDirY);
-	db->mapX = (int)db->player_x;
-	db->mapY = (int)db->player_y;
-	db->deltaDistX = sqrt(1 + (db->rayDirY * db->rayDirY)
-			/ (db->rayDirX * db->rayDirX));
-	db->deltaDistY = sqrt(1 + (db->rayDirX * db->rayDirX)
-			/ (db->rayDirY * db->rayDirY));
+	db->camera_x = 2 * x / (double)S_W - 1;
+	db->ray_dir_x = db->dir_x + db->plane_x * db->camera_x;
+	db->ray_dir_y = db->dir_y + db->plane_y * db->camera_x;
+	db->delta_dist_x = fabs(1 / db->ray_dir_x);
+	db->delta_dist_y = fabs(1 / db->ray_dir_y);
+	db->map_x = (int)db->player_x;
+	db->map_y = (int)db->player_y;
+	db->delta_dist_x = sqrt(1 + (db->ray_dir_y * db->ray_dir_y)
+			/ (db->ray_dir_x * db->ray_dir_x));
+	db->delta_dist_y = sqrt(1 + (db->ray_dir_x * db->ray_dir_x)
+			/ (db->ray_dir_y * db->ray_dir_y));
 	db->hit = 0;
 }
 
 void	calculate_step_sidedist(t_db *db)
 {
-	if (db->rayDirX < 0)
+	if (db->ray_dir_x < 0)
 	{
-		db->stepX = -1;
-		db->sideDistX = (db->player_x - db->mapX) * db->deltaDistX;
+		db->step_x = -1;
+		db->side_dist_x = (db->player_x - db->map_x) * db->delta_dist_x;
 	}
 	else
 	{
-		db->stepX = 1;
-		db->sideDistX = (db->mapX + 1.0 - db->player_x) * db->deltaDistX;
+		db->step_x = 1;
+		db->side_dist_x = (db->map_x + 1.0 - db->player_x) * db->delta_dist_x;
 	}
-	if (db->rayDirY < 0)
+	if (db->ray_dir_y < 0)
 	{
-		db->stepY = -1;
-		db->sideDistY = (db->player_y - db->mapY) * db->deltaDistY;
+		db->step_y = -1;
+		db->side_dist_y = (db->player_y - db->map_y) * db->delta_dist_y;
 	}
 	else
 	{
-		db->stepY = 1;
-		db->sideDistY = (db->mapY + 1.0 - db->player_y) * db->deltaDistY;
+		db->step_y = 1;
+		db->side_dist_y = (db->map_y + 1.0 - db->player_y) * db->delta_dist_y;
 	}
 }
 
@@ -56,87 +56,70 @@ void	check_ray(t_db *db)
 {
 	while (db->hit == 0)
 	{
-		if (db->sideDistX < db->sideDistY)
+		if (db->side_dist_x < db->side_dist_y)
 		{
-			db->sideDistX += db->deltaDistX;
-			db->mapX += db->stepX;
+			db->side_dist_x += db->delta_dist_x;
+			db->map_x += db->step_x;
 			db->side = 0;
 		}
 		else
 		{
-			db->sideDistY += db->deltaDistY;
-			db->mapY += db->stepY;
+			db->side_dist_y += db->delta_dist_y;
+			db->map_y += db->step_y;
 			db->side = 1;
 		}
-		if (db->map->map[db->mapY][db->mapX]
-			&& db->map->map[db->mapY][db->mapX] == '1')
+		if (db->map->map[db->map_y][db->map_x]
+			&& db->map->map[db->map_y][db->map_x] == '1')
 			db->hit = 1;
-	}
-}
-
-void	draw_image(t_db *db, int x)
-{
-	int	j;
-
-	j = 0;
-	while (j < db->drawStart)
-	{
-		set_image_pixel(db->w_image, x, j, 3071725);
-		j++;
-	}
-	while (j < db->drawEnd)
-	{
-		draw_wall(db, x, j);
-		j++;
-	}
-	while (j < S_H)
-	{
-		set_image_pixel(db->w_image, x, j, 2382603);
-		j++;
 	}
 }
 
 void	calculation(t_db *db)
 {
 	if (db->side == 0)
-		db->perpWallDist = (db->sideDistX - db->deltaDistX);
+		db->p_wall_dist = (db->side_dist_x - db->delta_dist_x);
 	else
-		db->perpWallDist = (db->sideDistY - db->deltaDistY);
+		db->p_wall_dist = (db->side_dist_y - db->delta_dist_y);
 	if (db->side == 0)
-		db->wallX = db->player_y + db->perpWallDist * db->rayDirY;
+		db->wall_x = db->player_y + db->p_wall_dist * db->ray_dir_y;
 	else
-		db->wallX = db->player_x + db->perpWallDist * db->rayDirX;
-	db->wallX -= floor((db->wallX));
-	db->texX = db->wallX * (double)db->db_img.size;
-	if (db->side == 0 && db->rayDirX < 0)
-		db->texX = db->db_img.size - db->texX - 1;
-	if (db->side == 1 && db->rayDirY > 0)
-		db->texX = db->db_img.size - db->texX - 1;
-	db->lineHeight = (int)(S_H / db->perpWallDist);
-	db->drawStart = -db->lineHeight / 2 + S_H / 2;
-	if (db->drawStart < 0)
-		db->drawStart = 0;
-	db->drawEnd = db->lineHeight / 2 + S_H / 2;
-	if (db->drawEnd >= S_H)
-		db->drawEnd = S_H - 1;
-	db->step = 1.0 * db->db_img.size / db->lineHeight;
-	db->texPos = (db->drawStart - S_H / 2 + db->lineHeight / 2) * db->step;
+		db->wall_x = db->player_x + db->p_wall_dist * db->ray_dir_x;
+	if (db->p_wall_dist <= 0.15)
+		db->p_wall_dist = 0.15;
+	db->wall_x -= floor((db->wall_x));
+	db->tex_x = db->wall_x * (double)db->db_img.size;
+	if (db->side == 0 && db->ray_dir_x < 0)
+		db->tex_x = db->db_img.size - db->tex_x - 1;
+	if (db->side == 1 && db->ray_dir_y > 0)
+		db->tex_x = db->db_img.size - db->tex_x - 1;
+	db->line_height = (int)(S_H / db->p_wall_dist);
+	db->draw_start = -db->line_height / 2 + S_H / 2;
+	if (db->draw_start < 0)
+		db->draw_start = 0;
+	db->draw_end = db->line_height / 2 + S_H / 2;
+	if (db->draw_end >= S_H)
+		db->draw_end = S_H - 1;
+	db->step = 1.0 * db->db_img.size / db->line_height;
+	db->tex_pos = (db->draw_start - S_H / 2 + db->line_height / 2) * db->step;
 }
 
 int	game_loop(void *d)
 {
 	t_db	*db;
 	int		color;
+	int		x;
 
+	x = 0;
 	color = 0;
 	db = d;
-	for (int x = 0; x < S_W; x++)
+	while (x < S_W)
 	{
 		set_data(db, x);
 		calculate_step_sidedist(db);
 		check_ray(db);
 		calculation(db);
 		draw_image(db, x);
+		x++;
 	}
 	mlx_put_image_to_window(db->mlx, db->win, db->w_image->img, 0, 0);
 	return (0);
