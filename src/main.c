@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 12:57:14 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 13:26:57 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	draw_image(t_db *db, int x)
 	j = 0;
 	while (j < db->draw_start)
 	{
-		set_image_pixel(db->w_image, x, j, 3071725);
+		set_image_pixel(db->w_image, x, j, db->c_color);
 		j++;
 	}
 	while (j < db->draw_end)
@@ -29,7 +29,7 @@ void	draw_image(t_db *db, int x)
 	}
 	while (j < S_H)
 	{
-		set_image_pixel(db->w_image, x, j, 2382603);
+		set_image_pixel(db->w_image, x, j,db->f_color);
 		j++;
 	}
 }
@@ -78,8 +78,8 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	set_player_position(db);
-	mlx_start(db);
 	init_textures(db);
+	mlx_start(db);
 	init_img_clean(db->w_image);
 	init_img(db);
 	mlx_hook(db->win, 17, 0, destroy_window, NULL);

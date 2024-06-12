@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:00:25 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 12:48:53 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 13:14:54 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_textures(t_db *data)
 	data->so = xpm_to_img(data, data->path_south);
 	data->ea = xpm_to_img(data, data->path_east);
 	data->we = xpm_to_img(data, data->path_west);
+	set_colors(data);
+
 }
 
 void	init_img_clean(t_img *img)

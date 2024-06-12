@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 13:00:36 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 13:34:32 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ typedef struct s_map
 
 typedef struct s_db
 {
+	double		f_r;
+	double		f_g;
+	double		f_b;
+	double		c_r;
+	double		c_g;
+	double		c_b;
+	int			c_color;
+	int			f_color;
 	void		*mlx;
 	void		*win;
 	void		*img;
@@ -116,6 +124,7 @@ typedef struct s_db
 	u_int32_t	buffer[S_H][S_W];
 }				t_db;
 
+int		rgb_to_int(double r, double g, double b);
 int		parse_map(char *file, t_db *db);
 char	*ft_read_line( char **file);
 int		check_texture(t_db *db);
@@ -141,5 +150,6 @@ void	initialise_tabs(char tab[6][6], int tab2[6]);
 int		verify_texture(int j, int tab2[], int i, t_db *db);
 void	load_texture(t_db *db, char *t_path);
 void	draw_wall(t_db *db, int x, int j);
+void	set_colors(t_db *db);
 
 #endif

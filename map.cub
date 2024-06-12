@@ -2,8 +2,8 @@ NO ./textures/blue_stone.xpm
 WE ./textures/eagle.xpm
 EA ./textures/mossy.xpm
 SO ./textures/red_brick.xpm
-F   220,100,0
-C   225,30,0
+F   153,76,0
+C   51,255,255
 
         1111111111111111111111111
         1000000000110000000000001
