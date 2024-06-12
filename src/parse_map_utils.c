@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 11:51:16 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 15:35:26 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	load_texture(t_db *db, char *t_path)
 			db->path_west = ft_strdup(t_path + length);
 		else if (t_path[0] == 'E' && t_path[1] == 'A')
 			db->path_east = ft_strdup(t_path + length);
+		printf("path : %s\n", db->path_north);
 		return ;
 	}
 	length = ft_strlen(t_path);

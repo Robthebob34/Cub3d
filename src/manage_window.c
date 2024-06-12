@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:58:22 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 13:33:57 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 14:17:06 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ void	mlx_start(t_db *db)
 	set_direction(db);
 }
 
-long long	rgb_to_int(double r, double g, double b)
+int	rgb_to_int(int r, int g, int b)
 {
-	long long	color;
+	int	color;
 
 	color = 0;
-	printf("r : %f, g : %f b : %f\n", r, g , b);
-	color |= (long long)(b * 255);
-	color |= (long long)(g * 255) << 8;
-	color |= (long long)(r * 255) << 16;
-	printf("color : %lld\n", -color);
-	return (-color);
+	color |= b;
+	color |= g << 8;
+	color |= r << 16;
+	return (color);
 }
 
 int	destroy_window(t_db *data)

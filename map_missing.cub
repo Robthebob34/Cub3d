@@ -1,0 +1,8 @@
+NO ./textures/blue_stone.xpm
+WE ./textures/eagle.xpm
+EA ./textures/mossy.xpm
+SO ./textures/red_brick.xpm
+
+F 20,20,20
+C 200,200,200
+

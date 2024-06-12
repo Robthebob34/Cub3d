@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 13:26:57 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 15:37:14 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	draw_image(t_db *db, int x)
 	}
 	while (j < S_H)
 	{
-		set_image_pixel(db->w_image, x, j,db->f_color);
+		set_image_pixel(db->w_image, x, j, db->f_color);
 		j++;
 	}
 }
@@ -60,13 +60,30 @@ void	set_image_pixel(t_img *image, int x, int y, int color)
 	image->addr[pixel] = color;
 }
 
+void	play(t_db *db)
+{
+	set_player_position(db);
+	init_textures(db);
+	mlx_start(db);
+	init_img_clean(db->w_image);
+	init_img(db);
+	mlx_hook(db->win, 17, 0, destroy_window, NULL);
+	mlx_hook(db->win, 2, 0, &key_hook, db);
+	mlx_loop_hook(db->mlx, &game_loop, db);
+	mlx_loop(db->mlx);
+}
+
 int	main(int argc, char **argv)
 {
 	t_db	*db;
 
 	db = malloc(sizeof(t_db));
+	if (!db)
+		return (1);
 	db->map = malloc(sizeof(t_map));
 	db->w_image = malloc (sizeof(t_img));
+	if (!db->map || !db->w_image)
+		return (1);
 	if (argc != 2)
 	{
 		printf("Usage Cub3d : ./cub3d map_name.cub");
@@ -77,14 +94,6 @@ int	main(int argc, char **argv)
 		printf("Error\n");
 		return (1);
 	}
-	set_player_position(db);
-	init_textures(db);
-	mlx_start(db);
-	init_img_clean(db->w_image);
-	init_img(db);
-	mlx_hook(db->win, 17, 0, destroy_window, NULL);
-	mlx_hook(db->win, 2, 0, &key_hook, db);
-	mlx_loop_hook(db->mlx, &game_loop, db);
-	mlx_loop(db->mlx);
+	play(db);
 	return (0);
 }

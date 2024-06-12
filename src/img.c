@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:00:25 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 13:14:54 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 15:47:04 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	init_textures(t_db *data)
 	data->ea = xpm_to_img(data, data->path_east);
 	data->we = xpm_to_img(data, data->path_west);
 	set_colors(data);
-
 }
 
 void	init_img_clean(t_img *img)
@@ -70,8 +69,9 @@ void	image_init(t_db *db, char *path)
 {
 	db->db_img.img = mlx_xpm_file_to_image(db->mlx, path,
 			&db->db_img.size, &db->db_img.size);
+	//free and exit properly
 	if (!db->db_img.img)
-		return ;
+		exit(1) ;
 	db->db_img.addr = (int *)mlx_get_data_addr(db->db_img.img,
 			&db->db_img.pixel_bits,
 			&db->db_img.size_line, &db->db_img.endian);

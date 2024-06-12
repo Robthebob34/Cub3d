@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 13:34:32 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/12 14:14:41 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ typedef struct s_db
 	u_int32_t	buffer[S_H][S_W];
 }				t_db;
 
-int		rgb_to_int(double r, double g, double b);
+int		rgb_to_int(int r, int g, int b);
 int		parse_map(char *file, t_db *db);
 char	*ft_read_line( char **file);
 int		check_texture(t_db *db);
