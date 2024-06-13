@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:55:28 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 15:37:14 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 17:37:24 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 	db->map = malloc(sizeof(t_map));
 	db->w_image = malloc (sizeof(t_img));
 	if (!db->map || !db->w_image)
-		return (1);
+		exit_free(db, "Error\nMalloc error");
 	if (argc != 2)
 	{
 		printf("Usage Cub3d : ./cub3d map_name.cub");
@@ -95,5 +95,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	play(db);
+	exit_end(db, "finito papito\n");
 	return (0);
 }

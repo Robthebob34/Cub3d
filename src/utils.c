@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 17:14:42 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 15:41:36 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 14:45:58 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	verify_texture(int j, int tab2[], int i, t_db *db)
 	while (db->map->texture_path[i])
 	{
 		load_texture(db, db->map->texture_path[i]);
-		printf("here %s\n", db->map->texture_path[i]);
 		i++;
 	}
 	return (1);

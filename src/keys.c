@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:06:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 14:20:24 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 17:39:11 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	key_hook(int keycode, t_db *db)
 {
 	if (keycode == ESC)
 	{
+		exit_end(db,"frg\n");
 		exit(EXIT_SUCCESS);
 	}
 	if (keycode == D)

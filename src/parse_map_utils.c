@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:17:20 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 15:35:26 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 14:53:41 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**get_map(char **file)
 		index++;
 		i++;
 	}
+	free_array(file);
 	map[index] = NULL;
 	return (map);
 }
@@ -54,8 +55,7 @@ void	load_texture(t_db *db, char *t_path)
 {
 	int	length;
 
-	length = ft_strlen(t_path);
-	length -= 5;
+	length = ft_strlen(t_path) - 5;
 	while (length >= 0 && t_path[length] != '.')
 		length--;
 	if (length > 0)
@@ -68,7 +68,6 @@ void	load_texture(t_db *db, char *t_path)
 			db->path_west = ft_strdup(t_path + length);
 		else if (t_path[0] == 'E' && t_path[1] == 'A')
 			db->path_east = ft_strdup(t_path + length);
-		printf("path : %s\n", db->path_north);
 		return ;
 	}
 	length = ft_strlen(t_path);
@@ -103,7 +102,24 @@ int	check_texture(t_db *db)
 	}
 	return (verify_texture(j, tab2, i, db));
 }
-
+int	check_for_valid_around(t_db *db, int x, int y, int map_len)
+{
+	if(x == 0
+		|| y == 0 || x == map_len - 1 || y == map_len - 1||
+		!db->map->map[x + 1][y] || !db->map->map[x - 1][y] 
+		|| db->map->map[x - 1][y] == ' ' || db->map->map[x + 1][y] == ' '
+		|| db->map->map[x][y - 1] == ' ' || db->map->map[x][y + 1] == ' ')
+		return(1);
+	return(0);
+}
+int	check_for_valid_char(t_db *db, int x, int y)
+{
+	if (db->map->map[x] && (db->map->map[x][y] == '0'
+		|| db->map->map[x][y] == 'N'|| db->map->map[x][y] == 'E'
+		|| db->map->map[x][y] == 'S' || db->map->map[x][y] == 'W'))
+		return (1);
+	return(0);
+}
 int	is_rounded(t_db *db, int x, int y)
 {
 	static int	is_close;
@@ -118,15 +134,12 @@ int	is_rounded(t_db *db, int x, int y)
 		y = 0;
 	}
 	map_len = ft_strlen(db->map->map[x]);
-	if (db->map->map[x] && (db->map->map[x][y] == ' '
-		|| db->map->map[x][y] == '1'))
+	if (db->map->map[x] && (db->map->map[x][y] == '1'
+		|| db->map->map[x][y] == ' '))
 		is_rounded(db, x, y + 1);
-	if (db->map->map[x] && db->map->map[x][y] == '0')
+	if (check_for_valid_char(db, x, y))
 	{
-		if (!db->map->map[x + 1][y] || !db->map->map[x - 1][y] || x == 0
-		|| y == 0 || x == map_len - 1 || y == map_len - 1
-		|| db->map->map[x - 1][y] == ' ' || db->map->map[x + 1][y] == ' '
-		|| db->map->map[x][y - 1] == ' ' || db->map->map[x][y + 1] == ' ' )
+		if (check_for_valid_around(db,x, y, map_len))
 		{
 			is_close = 1;
 			return (is_close);
@@ -135,3 +148,5 @@ int	is_rounded(t_db *db, int x, int y)
 	}
 	return (is_close);
 }
+
+

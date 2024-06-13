@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 10:56:11 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 14:14:41 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 15:18:29 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define A 0
 # define S 1
 # define D 2
-# define ROT_SPEED 0.25
+# define ROT_SPEED 0.31415926
 # define MOV_SPEED 0.5
 
 typedef struct s_img
@@ -39,20 +39,7 @@ typedef struct s_img
 	int				pixel_bits;
 	int				size_line;
 	int				endian;
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
-	int				*floor;
-	int				*ceiling;
-	unsigned long	hex_floor;
-	unsigned long	hex_ceiling;
 	int				size;
-	int				index;
-	double			step;
-	double			pos;
-	int				x;
-	int				y;
 }	t_img;
 
 typedef struct s_map
@@ -151,5 +138,11 @@ int		verify_texture(int j, int tab2[], int i, t_db *db);
 void	load_texture(t_db *db, char *t_path);
 void	draw_wall(t_db *db, int x, int j);
 void	set_colors(t_db *db);
+void	set_minimap_pixel(t_db *image, int x, int y, int color);
+void	draw_minimap(t_db *db);
+void	exit_free(t_db *db, char *message);
+void	free_array(char **arr);
+void	free_array_pos(char **arr, int x);
+void	exit_end(t_db *db, char *message);
 
 #endif

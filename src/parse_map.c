@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:01:33 by robinheck         #+#    #+#             */
-/*   Updated: 2024/06/12 15:32:18 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 14:43:13 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ char	**get_data(char **file)
 	{
 		data[i] = ft_read_line(file);
 		if (data[i] == NULL)
+		{
+			free_array_pos(data, i);
 			break ;
+		}
 		i++;
 	}
 	data[i] = NULL;
@@ -94,11 +97,14 @@ int	parse_map(char *file_path, t_db *db)
 	if (!file)
 		return (0);
 	db->map->texture_path = get_data(file);
-	if (!db->map->map)
-		return (0);
+	if (!db->map->texture_path)
+		exit(1);
 	db->map->map = get_map(file);
 	if (!db->map->map)
-		return (0);
+	{
+		free_array(file);
+		exit(1);
+	}
 	return (verify_extensention(file_path) && check_texture(db)
 		&& !is_rounded(db, 0, 0) && verfiy_characters(db));
 }

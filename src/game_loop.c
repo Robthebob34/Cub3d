@@ -6,7 +6,7 @@
 /*   By: rheck <rheck@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 15:04:29 by rheck             #+#    #+#             */
-/*   Updated: 2024/06/12 13:01:23 by rheck            ###   ########.fr       */
+/*   Updated: 2024/06/13 14:07:57 by rheck            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ int	game_loop(void *d)
 		x++;
 	}
 	mlx_put_image_to_window(db->mlx, db->win, db->w_image->img, 0, 0);
+	draw_minimap(db);
 	return (0);
 }
